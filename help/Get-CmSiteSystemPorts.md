@@ -23,7 +23,7 @@ Get CM Site Systems, Roles and Associated Network Ports
 
 ### EXAMPLE 1
 ```
-
+Get-CmSiteSystemPorts -SiteCode "P01" -PrimaryServer "cm01.contoso.local"
 ```
 
 ## PARAMETERS
