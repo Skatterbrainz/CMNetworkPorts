@@ -16,25 +16,63 @@ function Test-CmSiteSystemPorts {
 	[CmdletBinding()]
 	param (
 		[parameter(Mandatory=$True)][string][ValidateLength(3,3)]$SiteCode,
-		[parameter(Mandatory=$True)][string][ValidateNotNullOrEmpty()]$PrimaryServer
+		[parameter(Mandatory=$True)][string][ValidateNotNullOrEmpty()]$PrimaryServer,
+		[parameter(Mandatory=$False)][string][ValidateSet('Servers','Clients')]$TargetType = 'Servers'
 	)
 	$sitelist = Get-CmSiteSystemPorts -SiteCode $SiteCode -PrimaryServer $PrimaryServer
 	Write-Host "this needs more work to control the port queries per direction (inbound/outbound)"
+	$pass = @()
+	$fail = @()
 	foreach ($item in $sitelist) {
 		$server   = $item.ComputerName
-		$portdata = $item.Port -split ':'
-		$porttype = $portdata[0]
-		$portnum  = $portdata[1]
-		try {
-			if ($porttype -eq 'TCP') {
-				Test-NetConnection -ComputerName $server -Port $portnum
+		if (($TargetType -eq 'Servers') -and ($server -ne '(Clients)')) {
+			$portdata = $item.Port -split ':'
+			$porttype = $portdata[0]
+			$portnum  = $portdata[1]
+			$portdesc = $item.Description
+			if (($portnum -notlike '*-*') -and ($portnum -ne 'DYNAMIC')) {
+				$test = "$server,$portnum"
+				try {
+					if (($pass -notcontains $test) -and ($fail -notcontains $test)) {
+						if ($porttype -eq 'TCP') {
+							if ((Test-NetConnection -ComputerName $server -Port $portnum -ErrorAction SilentlyContinue).TcpTestSucceeded) {
+								$pass += $test
+								$stat = 'pass'
+							} else {
+								$fail += $test
+								$stat = 'fail'
+							}
+						} else {
+							Write-Host "test UDP connection to port $portnum"
+							#Test-NetConnectionUDP
+							$stat = 'fail'
+						}
+						[pscustomobject]@{
+							Status      = $stat
+							Destination = $server
+							RoleName    = $item.RoleName
+							Source      = $env:COMPUTERNAME
+							Port        = $portnum
+							Type        = $porttype
+							PortInfo    = $portdesc
+						}
+					} else {
+						Write-Verbose "already tested: $server $($item.port)"
+					}
+				}
+				catch {
+					Write-Error $_.Exception.Message
+					$fail += $test
+				}	
 			} else {
-				Write-Host "test UDP connection to port $portnum"
-				#Test-NetConnectionUDP
+				if ($portnum -eq 'DYNAMIC') {
+					Write-Warning "testing of dynamic ports is not yet supported"
+				} else {
+					Write-Verbose "skipping port range: $($item.port)"
+				}
 			}
-		}
-		catch {
-			Write-Error $_.Exception.Message
+		} elseif ($TargetType -eq 'Clients') {
+			Write-Verbose "skipping clients for now"
 		}
 	}
 }

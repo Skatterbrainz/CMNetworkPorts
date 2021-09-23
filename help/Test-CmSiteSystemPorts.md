@@ -13,7 +13,8 @@ Test if Required Ports are open
 ## SYNTAX
 
 ```
-Test-CmSiteSystemPorts [-SiteCode] <String> [-PrimaryServer] <String> [<CommonParameters>]
+Test-CmSiteSystemPorts [-SiteCode] <String> [-PrimaryServer] <String> [[-TargetType] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +55,21 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TargetType
+{{ Fill TargetType Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: Servers
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
