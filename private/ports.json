@@ -1,0 +1,200 @@
+{
+	"transactions": [
+		{
+			"Source": "AssetIntelligenceSynchronizationPoint",
+			"Destination": "Microsoft",
+			"Comment": "",
+			"TCPReg": "",
+			"TCPSSL": "443",
+			"UDP": ""
+		},
+		{
+			"Source": "AssetIntelligenceSynchronizationPoint",
+			"Destination": "SQLServer",
+			"Comment": "",
+			"TCPReg": "1433",
+			"TCPSSL": "",
+			"UDP": ""
+		},
+		{
+			"Source": "CMGConnectionPoint",
+			"Destination": "CMGVirtualMachineScaleSet",
+			"Comment": "",
+			"TCPReg": "",
+			"TCPSSL": "443,10124-10139",
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "CMGConnectionPoint",
+			"Destination": "CMGClassicService",
+			"Comment": "",
+			"TCPReg": "10140-10155",
+			"TCPSSL": "443,10124-10139",
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "CMGConnectionPoint",
+			"Destination": "ManagementPoint",
+			"Comment": "",
+			"TCPReg": "80",
+			"TCPSSL": "443",
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "CMGConnectionPoint",
+			"Destination": "SoftwareUpdatePoint",
+			"Comment": "",
+			"TCPReg": "443,8531",
+			"TCPSSL": "80,8530",
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "NetworkDeviceEnrollmentService",
+			"Destination": "CertificateRegistrationPoint",
+			"Comment": "",
+			"TCPReg": "", 
+			"TCPSSL": "443", 
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "DataWarehouseServicePoint",
+			"Destination": "SQLServer",
+			"Comment": "",
+			"TCPReg": "1433", 
+			"TCPSSL": "1433", 
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "DistributionPoint",
+			"Destination": "ManagementPoint",
+			"Comment": "",
+			"TCPReg": "80", 
+			"TCPSSL": "443", 
+			"UDP": "",
+			"Dynamic": ""
+		},
+		{
+			"Source": "EndpointProtectionPoint",
+			"Destination": "Microsoft",
+			"Comment": "SQL over TCP",
+			"TCPReg": "1433", 
+			"TCPSSL": "1433", 
+			"UDP": ""
+		},
+		{
+			"Source": "EnrollmentProxyPoint",
+			"Destination": "EnrollmentPoint",
+			"Comment": "",
+			"TCPReg": "", 
+			"TCPSSL": "443", 
+			"UDP": ""
+		},
+		{
+			"Source": "EnrollmentPoint",
+			"Destination": "SQLServer",
+			"Comment": "SQL over TCP",
+			"TCPReg": "1433", 
+			"TCPSSL": "1433", 
+			"UDP": ""
+		},
+		{
+			"Source": "ExchangeServerConnector",
+			"Destination": "ExchangeOnPrem",
+			"Comment": "WinRM over HTTP",
+			"TCPReg": "5985", 
+			"TCPSSL": "5985", 
+			"UDP": ""
+		},
+		{
+			"Source": "ManagementPoint",
+			"Destination": "ActiveDirectoryDomainController",
+			"Comment": "LDAP,LDAPS,GC-LDAP,RPCEM,RPC, see docs for dynamic ports",
+			"TCPReg": "389,636,3268,135", 
+			"TCPSSL": "389,636,3268,135", 
+			"UDP": "389,636",
+			"Dynamic": "49152-65535"
+		},
+		{
+			"Source": "ManagementPoint",
+			"Destination": "SiteServer",
+			"Comment": "RPCEM,RPC,SMB, see docs for dynamic ports",
+			"TCPReg": "135,445", 
+			"TCPSSL": "135,445", 
+			"UDP": "",
+			"Dynamic": "49152-65535"
+		},
+		{
+			"Source": "ManagementPoint",
+			"Destination": "SQLServer",
+			"Comment": "SQL over TCP",
+			"TCPReg": "1433", 
+			"TCPSSL": "1433", 
+			"UDP": ""
+		},
+		{
+			"Source": "ReportingServicesPoint",
+			"Destination": "SQLServer",
+			"Comment": "SQL over TCP",
+			"TCPReg": "1433", 
+			"TCPSSL": "1433", 
+			"UDP": ""
+		},
+		{
+			"Source": "ServiceConnectionPoint",
+			"Destination": "Microsoft",
+			"Comment": "Azure CMG",
+			"TCPReg": "", 
+			"TCPSSL": "443", 
+			"UDP": ""
+		},
+		{
+			"Source": "SiteServer",
+			"Destination": "AssetIntelligenceSynchronizationPoint",
+			"Comment": "SMB,RPCEM,RPC, see docs for dynamic ports",
+			"TCPReg": "135,445", 
+			"TCPSSL": "135,445", 
+			"UDP": "135",
+			"Dynamic": "49152-65535"
+		},
+		{
+			"Source": "SiteServer",
+			"Destination": "Client",
+			"Comment": "Wake On LAN",
+			"TCPReg": "", 
+			"TCPSSL": "", 
+			"UDP": "9"
+		},
+		{
+			"Source": "SiteServer",
+			"Destination": "CloudDistributionPoint",
+			"Comment": "HTTPS",
+			"TCPReg": "", 
+			"TCPSSL": "443", 
+			"UDP": ""
+		},
+		{
+			"Source": "SiteServer",
+			"Destination": "DistributionPoint",
+			"Comment": "Standard or Pull, see docs for dynamic ports",
+			"TCPReg": "135,445", 
+			"TCPSSL": "135,445", 
+			"UDP": "135",
+			"Dynamic": "49152-65535"
+		},
+		{
+			"Source": "_InitiatesConnection_",
+			"Destination": "_RespondsToConnection_",
+			"Comment": "",
+			"TCPReg": "_PortsWhenSSLisNotUsed_", 
+			"TCPSSL": "_PortsWhenSSLisUsed_", 
+			"UDP": "",
+			"Dynamic": "_PortRange_"
+		}
+	]
+}
