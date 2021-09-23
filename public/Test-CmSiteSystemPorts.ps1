@@ -20,4 +20,21 @@ function Test-CmSiteSystemPorts {
 	)
 	$sitelist = Get-CmSiteSystemPorts -SiteCode $SiteCode -PrimaryServer $PrimaryServer
 	Write-Host "this needs more work to control the port queries per direction (inbound/outbound)"
+	foreach ($item in $sitelist) {
+		$server   = $item.ComputerName
+		$portdata = $item.Port -split ':'
+		$porttype = $portdata[0]
+		$portnum  = $portdata[1]
+		try {
+			if ($porttype -eq 'TCP') {
+				Test-NetConnection -ComputerName $server -Port $portnum
+			} else {
+				Write-Host "test UDP connection to port $portnum"
+				#Test-NetConnectionUDP
+			}
+		}
+		catch {
+			Write-Error $_.Exception.Message
+		}
+	}
 }
