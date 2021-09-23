@@ -8,6 +8,7 @@
 .PARAMETER PrimaryServer
 	ConfigMgr Primary Site Server or SMS Provider FQDN
 .EXAMPLE
+	Get-CmSiteSystemPorts -SiteCode "P01" -PrimaryServer "cm01.contoso.local"
 .NOTES
 .OUTPUTS
 #>
