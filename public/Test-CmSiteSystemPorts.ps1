@@ -17,7 +17,8 @@ function Test-CmSiteSystemPorts {
 	param (
 		[parameter(Mandatory=$True)][string][ValidateLength(3,3)]$SiteCode,
 		[parameter(Mandatory=$True)][string][ValidateNotNullOrEmpty()]$PrimaryServer,
-		[parameter(Mandatory=$False)][string][ValidateSet('Servers','Clients')]$TargetType = 'Servers'
+		[parameter(Mandatory=$False)][string][ValidateSet('Servers','Clients')]$TargetType = 'Servers',
+		[parameter(Mandatory=$False)][string][ValidateSet('Basic','Advanced')]$Level = 'Basic'
 	)
 	$sitelist = Get-CmSiteSystemPorts -SiteCode $SiteCode -PrimaryServer $PrimaryServer
 	Write-Host "this needs more work to control the port queries per direction (inbound/outbound)"
@@ -30,6 +31,21 @@ function Test-CmSiteSystemPorts {
 			$porttype = $portdata[0]
 			$portnum  = $portdata[1]
 			$portdesc = $item.Description
+			if ($Level -eq 'Advanced') {
+				if ($portnum -ne 'DYNAMIC') {
+					if ($portnum -like '*-*') {
+						# expand port numbers within range
+						$portnums = Invoke-Expression $($portnum.Replace("-",".."))
+					} else {
+						# check an explicit port
+					}
+				} else {
+					Write-Verbose "testing of dynamic ports is not yet supported"
+				}
+			} else {
+				if (($portnum -notlike '*-*') -and ($portnum -ne 'DYNAMIC')) {
+				}
+			}
 			if (($portnum -notlike '*-*') -and ($portnum -ne 'DYNAMIC')) {
 				$test = "$server,$portnum"
 				try {

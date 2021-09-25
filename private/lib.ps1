@@ -114,9 +114,7 @@ function Get-PortInfo {
 function Start-UDPServer {
 	[CmdletBinding()]
 	param (
-		# Parameter help description
-		[Parameter(Mandatory = $false)]
-		$Port = 10000
+		[Parameter(Mandatory=$false)]$Port = 10000
 	)
 	
 	# Create a endpoint that represents the remote host from which the data was sent.
@@ -149,17 +147,9 @@ function Start-UDPServer {
 function Test-NetConnectionUDP {
 	[CmdletBinding()]
 	param (
-		# Desit
-		[Parameter(Mandatory = $true)]
-		[int32]$Port,
-
-		# Parameter help description
-		[Parameter(Mandatory = $true)]
-		[string]$ComputerName,
-
-		# Parameter help description
-		[Parameter(Mandatory = $false)]
-		[int32]$SourcePort = 50000
+		[Parameter(Mandatory=$true)][int32]$Port,
+		[Parameter(Mandatory=$true)][string]$ComputerName,
+		[Parameter(Mandatory=$false)][int32]$SourcePort = 50000
 	)
 
 	begin {
@@ -186,8 +176,7 @@ function Test-NetConnectionUDP {
 function Start-TCPServer {
 	[CmdletBinding()]
 	param (
-		[Parameter(Mandatory = $false)]
-		$Port = 10000
+		[Parameter(Mandatory=$False)]$Port = 10000
 	)
 	do {
 		# Create a TCP listender on Port $Port
@@ -201,4 +190,24 @@ function Start-TCPServer {
 		# Output information about remote client
 		$ReceiveBytes.Client.RemoteEndPoint
 	}  while (1)
+}
+
+function Test-TcpUdpPort {
+	[CmdletBinding()]
+	param (
+		[parameter(Mandatory=$True)][string][ValidateNotNullOrEmpty()]$ComputerName,
+		[parameter(Mandatory=$True)][int]$Port,
+		[parameter(Mandatory=$True)][string][ValidateSet('TCP','UDP')]$Protocol
+	)
+	Write-Verbose "testing port $Protocol $Port on $ComputerName"
+	if ($Protocol -eq 'TCP') {
+		if ((Test-NetConnection -ComputerName $ComputerName -Port $Port -ErrorAction SilentlyContinue).TcpTestSucceeded) {
+			Write-Output $True
+		}
+	} else {
+		Write-Host "test UDP connection to port $Port"
+		if (Test-NetConnectionUDP -Port $Port -ComputerName $ComputerName -SourcePort $Port) {
+			Write-Output $True
+		}
+	}
 }
